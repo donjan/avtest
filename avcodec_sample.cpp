@@ -18,7 +18,7 @@
 // format.
 #define INT64_C
 #define UINT64_C
-#define __STDC_CONSTANT_MACROS
+//~ #define __STDC_CONSTANT_MACROS
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 
