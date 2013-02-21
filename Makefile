@@ -1,9 +1,9 @@
-.PHONY: getframe sample
+.PHONY: all getframe sample videoprocess
 
 CC = g++
 DEFNS = -D__STDC_CONSTANT_MACROS
-#~ LIBS = -lavformat -lavcodec -lavutil -lswscale -lz -lm
-LIBS = -lavformat
+LIBS = -lavformat -lavcodec -lavutil -lavfilter -lswscale -lz -lm
+#~ LIBS = -lavformat
 
 all: getframe
 
@@ -13,3 +13,5 @@ getframe:
 sample:
 	$(CC) $(DEFNS) -o sample avcodec_sample.cpp -O2 $(LIBS)
 
+videoprocess:
+	$(CC) $(DEFNS) -o videoprocess VideoProcess.cpp VideoProcessTest.cpp -O2 $(LIBS)
