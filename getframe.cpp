@@ -14,10 +14,35 @@ AVFrame * rgbframe;  // AVFrame structure (video frame)
 void die(std::string str) { std::cerr << str << std::endl; std::abort(); }
 void init_stuff();
 void cleanup_stuff();
+void info_stuff();
 
 int main() {
 
     init_stuff();
+
+    info_stuff();
+
+
+    //~ getRandomFrame(42);  // stateless
+    //~ getNextFrame(); // stateful
+
+    // WARNING: lots of return code error checking omitted in following block
+    AVPacket packet;
+    av_init_packet(&packet);
+    int rv = av_read_frame(av_input, &packet);
+    AVFrame * frame;
+    frame = avcodec_alloc_frame();
+	int got_frame;
+    rv = avcodec_decode_video2(vstream->codec, frame, &got_frame, &packet);
+
+    std::cout << "\nFirst frame info (http://ffmpeg.org/doxygen/trunk/structAVFrame.html)" << std::endl;
+    std::cout << " linesize: " << frame->linesize << std::endl;
+    std::cout << " sizeof(data): " << sizeof(frame->data) << std::endl;
+    std::cout << " dimensions: " << frame->width << "x" << frame->height << std::endl;
+    std::cout << " audio samples per channel: " << frame->nb_samples << std::endl;
+    std::cout << " first 10 pixels from data[0] vector (img data):" << std::endl << "  ";
+    for(int i = 0; i < 10; ++i) std::cout << " " << (int)frame->data[0][i];
+
 
 
     cleanup_stuff();
@@ -63,10 +88,6 @@ void init_stuff() {
     if(avcodec_open2(vstream->codec, codec, NULL) < 0) die("cannot open codec!");
 
 
-    double framerate = (double)vstream->r_frame_rate.num / (double)vstream->r_frame_rate.den;
-    std::cout << "framerate (fps): " << framerate << std::endl;
-
-
     // prepare frame:
 
     rgbframe = avcodec_alloc_frame();
@@ -98,3 +119,14 @@ void cleanup_stuff() {
     else if(vstream) av_freep(&vstream);   
 
 }
+
+void info_stuff() {
+
+    std::cout << std::endl;
+    av_dump_format(av_input, 0, filename.c_str(), false);
+
+    double framerate = (double)vstream->r_frame_rate.num / (double)vstream->r_frame_rate.den;
+    std::cout << "\tframerate (fps): " << framerate << std::endl;
+
+}
+
