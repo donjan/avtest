@@ -23,6 +23,7 @@ int main() {
     info_stuff();
 
 
+    // TODO: two frame functions
     //~ getRandomFrame(42);  // stateless
     //~ getNextFrame(); // stateful
 
@@ -42,6 +43,7 @@ int main() {
     std::cout << " audio samples per channel: " << frame->nb_samples << std::endl;
     std::cout << " first 10 pixels from data[0] vector (img data):" << std::endl << "  ";
     for(int i = 0; i < 10; ++i) std::cout << " " << (int)frame->data[0][i];
+
 
 
 
