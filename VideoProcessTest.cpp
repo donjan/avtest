@@ -22,10 +22,10 @@ int main(int argc, char* argv[])
 	AVRational time_base = decoder.getTimeBase();
 	AVRational aspect_ratio = decoder.getAspectRatio();
 
-dcout(_HERE_);
+dout_HERE;
 	Filter filter = Filter("yadif=1:-1", width, height, pix_fmt,
 		time_base, aspect_ratio, &get_next_frame, &decoder);
-dcout(_HERE_);
+dout_HERE;
 
 	Scaler scaler = Scaler(width, height, pix_fmt, width, height, PIX_FMT_RGB24);
 

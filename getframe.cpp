@@ -1,3 +1,6 @@
+///
+// geared for libav 0.8.5
+
 #include <cstdlib>
 #include <iostream>
 
@@ -25,15 +28,15 @@ int main() {
 
     // TODO: two frame functions
     //~ getRandomFrame(42);  // stateless
-    //~ getNextFrame(); // stateful
+    //~ getNextFrame(); // stateful, more efficient: batch decoding, no keyframe seeking
 
     // WARNING: lots of return code error checking omitted in following block
     AVPacket packet;
-    av_init_packet(&packet);
+    //~  av_init_packet(&packet); # possibly optional
     int rv = av_read_frame(av_input, &packet);
     AVFrame * frame;
     frame = avcodec_alloc_frame();
-	int got_frame;
+    int got_frame;
     rv = avcodec_decode_video2(vstream->codec, frame, &got_frame, &packet);
 
     std::cout << "\nFirst frame info (http://ffmpeg.org/doxygen/trunk/structAVFrame.html)" << std::endl;

@@ -220,10 +220,10 @@ namespace VideoProcess
 
 		char args[256];
 		//~ sprintf_s(args, sizeof(args), "%d:%d:%d:%d:%d:%d:%d", width, height, pix_fmt,
-dcout(_HERE_);
+dout_HERE;
 		sprintf(args, (const char*)sizeof(args), "%d:%d:%d:%d:%d:%d:%d", width, height, pix_fmt,
 			time_base.num, time_base.den, aspect_ratio.num, aspect_ratio.den);
-dcout(_HERE_);
+dout_HERE;
 
 		int rv;
 
